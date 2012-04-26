@@ -1,0 +1,24 @@
+{% extends "sysBase/formBase.html" %}
+{% load i18n %}
+{% block sys_top_nav %}
+    <ul class="nav">
+        <li><a href="/">{% trans "Home" %}</a></li>
+    </ul>
+{% endblock %}
+{% block form_extra_error %}
+    {% for nfe in form.non_field_errors %}
+        <div class="alert fade in">
+            <a href="#" data-dismiss="alert" class="close">×</a>
+            {{ nfe }}
+        </div>
+    {% endfor %}
+{% endblock %}
+{% block form_btn %}
+    <input type="hidden" name="next" value="{{ next }}"/>
+    <button class="btn" type="submit">{% trans 'Log in' %}</button>
+    <button class="btn" type="reset">{% trans 'Reset' %}</button>
+    <a class="btn" href="{% url registeruser %}">{% trans 'Register' %}</a>
+{% endblock %}
+{% block excra_js %}
+        <script type="text/javascript" src="/static/js/bootstrap-alert.js"></script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "sysBase/listBase.html" %}
+{% load i18n sys_tags %}
+{% block list_button %}
+    <ul>
+        <li>
+            <a href="{% url addlink %}">{% trans "Add" %}</a>
+        </li>
+        <li>
+            <a href="{% url dellink %}"
+               class="multi_btn"
+               alert_text="{% trans 'Are you sure to delete selected?' %}">
+                {% trans "Delete" %}
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+{% block list_head %}
+    <th>{% trans 'Link Name' %}</th>
+    <th>{% trans 'Link Url' %}</th>
+    <th>{% trans 'Description' %}</th>
+{% endblock %}
+{% block list_body %}
+    <td width="32px"><input type="checkbox" class='cbox' tid={{ t.id }}></td>
+    <td><a href="{% url editlink t.id %}">{{ t.name }}</a></td>
+    <td><a href="{{ t.url }}" target="_blank">{{ t.url }}</a></td>
+    <td>{{ t.description }}</td>
+{% endblock %}
+{% block list_body_length %}4{% endblock %}

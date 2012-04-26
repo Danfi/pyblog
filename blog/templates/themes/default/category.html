@@ -1,0 +1,66 @@
+{% extends "themes/default/base.html" %}
+{% block title_block %}分类:“{{category.name}}”下的所有文章{% endblock %}
+{% block content%}
+    <div class='t_div'>
+        <div class='t_div_t t_div_k'>
+            <h3 class="category-article">分类:“{{category.name}}”下的所有文章</h3>
+        </div>
+    </div>
+    {% if object_result %}
+        {% for article in object_result %}
+            <div class='t_div' id="post-{{ article.id }}">
+                <div class='t_div_t t_div_k'>
+                    <div class='post-title'>
+                        <a href="/{{ article.slug }}.html" title="{{article.title}}">{{article.title}}</a>
+                        <div class="post-edit">
+                            {%if article.author == user %}
+                                <a href="{% url editarticle article.id %}">编辑</a>
+                            {%endif%}
+                        </div>
+                    </div>
+                    <div class='post-time'>
+                        Posted by {{ article.author.get_user_nickname }} on {{ article.publishTime|date:"Y-m-d H:i" }}
+                        {% if article.allowComment %}
+                            <div class="post-comment">
+                                <a href="/{{ article.slug }}.html#comments">评论({{ article.article_comments.count }})</a>
+                            </div>
+                        {%endif%}
+                    </div>
+                    <div class='post-content'>
+                        {% if article.abstract  %}
+                            {{ article.abstract|safe }}
+                        {% else %}
+                            {{ article.content|safe }}
+                        {% endif %}
+                    </div>
+                    {% if article.abstract  %}
+                        <div class='post-bottom'>
+                            <a href="/{{ article.slug }}.html">阅读全文</a>
+                        </div>
+                    {% endif %}
+                    <div class="clr"></div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="clr"></div>
+        <div class="page_nav">
+            <ul class="pager">
+                {% if prev_page %}
+                    <li><a href="?page={{ prev_page }}">前一页</a></li>
+                {% endif %}
+                {% if next_page %}
+                    <li><a href="?page={{ next_page }}">下一页</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="clr"></div>
+    {% else %}
+        <div class='t_div'>
+            <div class='t_div_t t_div_k'>
+                <h3 class="category-article">记录未找到</h3>
+                <p style="text-align: center;">当前还没文章哦.</p>
+            </div>
+        </div>
+        <div class="clr"></div>
+    {% endif %}
+{% endblock %}

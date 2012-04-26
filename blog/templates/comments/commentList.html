@@ -1,0 +1,48 @@
+{% extends "sysBase/listBase.html" %}
+{% load i18n sys_tags %}
+{% block excra_css %}
+    <style>
+        .table_head_ul{
+            width: 60px;
+        }
+        .list_filter{
+            min-width: 60px;
+        }
+    </style>
+{% endblock %}
+{% block list_button %}
+    <ul>
+        <li>
+            <a href="{% url delcomment %}"
+               class="multi_btn"
+               alert_text="{% trans 'Are you sure to delete selected?' %}">
+                {% trans "Delete" %}
+            </a>
+        </li>
+        <li>
+            <a href="{% url enablecomment %}"
+               class="multi_btn"
+               alert_text="{% trans 'Are you sure to enable selected?' %}">
+                {% trans "Enable" %}
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+{% block list_head %}
+    <th>{% trans 'Username' %}</th>
+    <th>{% trans 'Content' %}</th>
+    <th>{% trans 'Submit Time' %}</th>
+    <th>{% trans 'From' %}</th>
+    <th>
+        {% get_list_filter tstatus 'getcommentlist' 'status' commentsStatus %}
+    </th>
+{% endblock %}
+{% block list_body %}
+    <td width="32px"><input type="checkbox" class='cbox' tid={{ t.id }}></td>
+    <td>{{ t.username }}</td>
+    <td><a href="{% url editcomment t.id %}">{{ t.content|slice:":20" }}</a></td>
+    <td>{{ t.submitTime|date:"Y-m-d H:i" }}</td>
+    <td>{{ t.article }}</td>
+    <td>{{ t.get_status_display }}</td>
+{% endblock %}
+{% block list_body_length %}6{% endblock %}

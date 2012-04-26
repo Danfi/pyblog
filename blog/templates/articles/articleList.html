@@ -1,0 +1,32 @@
+{% extends "sysBase/listBase.html" %}
+{% load i18n sys_tags %}
+{% block list_button %}
+    <ul>
+        <li>
+            <a href="{% url addarticle %}">{% trans "Add" %}</a>
+        </li>
+        <li>
+            <a href="{% url delarticle %}"
+               class="multi_btn"
+               alert_text="{% trans 'Are you sure to delete selected?' %}">
+                {% trans "Delete" %}
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+{% block list_head %}
+    <th>{% trans 'Title' %}</th>
+    <th>{% trans 'Author' %}</th>
+    <th>{% trans 'Categories' %}</th>
+    <th>{% trans 'Tags' %}</th>
+    <th>{% trans 'Publish Time' %}</th>
+{% endblock %}
+{% block list_body %}
+    <td width="32px"><input type="checkbox" class='cbox' tid={{ t.id }}></td>
+    <td><a href="{% url editarticle t.id %}">{{ t.title }}</a></td>
+    <td>{{ t.author.get_user_nickname }}</td>
+    <td>{% for tc in t.categories.all %}{% if not forloop.first %},{% endif %}<a href="{% url getarticlelist %}?t_filter=true&t_filter_name=categories&t_filter_value={{ tc.id }}">{{ tc }}</a>{% endfor %}</td>
+    <td>{% for tt in t.tags.all %}{% if not forloop.first %},{% endif %}<a href="{% url getarticlelist %}?t_filter=true&t_filter_name=tags&t_filter_value={{ tt.id }}">{{ tt }}</a>{% endfor %}</td>
+    <td>{{ t.publishTime|date:"Y-m-d H:i:s" }}</td>
+{% endblock %}
+{% block list_body_length %}6{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "sysBase/listBase.html" %}
+{% load i18n sys_tags %}
+{% block list_head %}
+    <th>{% trans 'Filename' %}</th>
+    <th>{% trans 'Upload Time' %}</th>
+{% endblock %}
+{% block list_body %}
+    <td width="32px"><input type="checkbox" class='cbox' tid={{ t.id }}></td>
+    <td><a href="/uploadfiles/{{ t.fileUrl }}" target="_blank">{{ t.filename }}</a></td>
+    <td>{{ t.uploadTime|date:"Y-m-d H:i:s" }}</td>
+{% endblock %}
+{% block list_body_length %}3{% endblock %}

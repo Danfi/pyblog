@@ -1,0 +1,159 @@
+{% extends "themes/default/base.html" %}
+{% block title_block %}{{ article.title }}{% endblock %}
+{% block content%}
+    {% if article %}
+        <div class='t_div' id="post-{{ article.id }}">
+            <div class='t_div_t t_div_k'>
+                <div class='post-title'>
+                    <a href="/{{ article.slug }}.html" title="{{article.title}}">{{article.title}}</a>
+                    <div class="post-edit">
+                        {%if article.author == user %}
+                            <a href="{% url editarticle article.id %}">编辑</a>
+                        {%endif%}
+                    </div>
+                </div>
+                <div class='post-time'>
+                    Posted by {{ article.author.get_user_nickname }} on {{ article.publishTime|date:"Y-m-d H:i" }}
+                    {% if article.allowComment %}
+                        <div class="post-comment">
+                            <a href="/{{ article.slug }}.html#comments">评论({{ article.article_comments.count }})</a>
+                        </div>
+                    {%endif%}
+                </div>
+                <div class='post-content'>
+                    {{ article.content|safe }}
+                </div>
+                <div class='post-bottom'>
+                    {% if article.categories.all or article.tags.all %}Posted in {% if article.categories.all %}分类: {%for cate in article.categories.all %} <a href="/category/{{cate.slug}}">{{cate.name}}</a> {%endfor%}{% endif %}{% if article.tags.all %}| 标签: {%for tag in article.tags.all%}<a href="/tag/{{tag.name}}">{{tag}}</a> {%endfor%}{%endif%}{%endif%}
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+        <div class="clr"></div>
+        {% if article.allowComment %}
+            <div class='t_div'>
+                <div class='t_div_t t_div_k'>
+                    <h3 class="category-article">评论</h3>
+                </div>
+            </div>
+            {% if tcomments %}
+                {% for tcomment in tcomments %}
+                    <div class='t_div' id="comment-{{tcomment.id}}">
+                        <div class='t_div_t t_div_k'>
+                            <div class="gravatar"><img height="50" width="50" class="avatar avatar-50" src="{{tcomment.gravatar_url}}"
+                                                       alt=""/></div>
+                            <div class="comments">
+                                <div class="comments_title">
+                                    <div class="comment_author">
+                                        {% if tcomment.website %}
+                                            <a href="{{tcomment.website}}" target="_blank">{{tcomment.username}}</a>
+                                        {% else %}
+                                            {{tcomment.username}}
+                                        {% endif %}
+                                    </div>
+                                    <span class="comment_right">
+                                        <span class="floor">#{{tcomment.no}} F </span></br>
+                                        <span class="comment_time"><small class="commentmetadata">{{tcomment.submitTime|date:"Y-m-d H:i"}}</small></span></br>
+                                        <span class="comment_reply"><a onclick="return backcomment('<a href=#comment-{{tcomment.id}}>{{tcomment.username}}</a></br>');" href="#commentarea">回复</a></span>
+
+                                    </span>
+                                </div>
+                                <div class="comment_content">
+                                    {{tcomment.content|safe}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clr"></div>
+                {% endfor %}
+                {% if prev_page or next_page %}
+                    <div class='t_div'>
+                        <div class='t_div_t t_div_k'>
+                            <ul class="comment_pager">
+                                {% if prev_page %}
+                                    <li><a href="?page={{ prev_page }}">前一页</a></li>
+                                {% endif %}
+                                {% if prev_page and next_page %} | {% endif %}
+                                {% if next_page %}
+                                    <li><a href="?page={{ next_page }}">下一页</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+            <div class='t_div'>
+                <div class='t_div_t t_div_k'>
+                    <div class="comment_form">
+                        <a name="commentarea"></a> <!--回复使用的锚--->
+                        <h3>发表评论</h3>
+
+                        <form action="{{ form_url }}" method="post" id="commentform">{% csrf_token %}
+                            <div id="respond">
+                                <div id="author_info">
+                                    <div class="row">
+                                        {{ form.username }}
+                                        <label for="id_username" class="small">昵称 (必填)</label>
+                                        {{ form.username.errors }}
+                                    </div>
+                                    <div class="row">
+                                        {{ form.email }}
+                                        <label for="id_email" class="small">电子邮箱 (必填，但不会被公开)</label>
+                                        {{ form.email.errors }}
+                                    </div>
+                                    <div class="row">
+                                        {{ form.website }}
+                                        <label for="id_website" class="small">网址</label>
+                                        {{ form.website.errors }}
+                                    </div>
+                                    <div class="row">
+                                        {{ form.arithmetic }}
+                                        <label for="id_arithmetic" class="small">{{ number1 }}+{{ number2 }}=? （必填）</label>
+                                        {{ form.arithmetic.errors }}
+                                        <input type="hidden" name='number1' value="{{ number1 }}">
+                                        <input type="hidden" name='number2' value="{{ number2 }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    {{ form.content|safe }}{{ form.content.errors }}
+                                </div>
+                                <div class="submitbutton">
+                                    <input name="submit" type="submit" id="submit" class="button" tabindex="6" value="提交评论"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class='t_div'>
+            <div class='t_div_t t_div_k'>
+                <h3 class="category-article">记录未找到</h3>
+            </div>
+        </div>
+        <div class="clr"></div>
+    {% endif %}
+{% endblock %}
+{% block blog_extra_js %}
+    <script type="text/javascript">
+        //回复自动输入姓名函数
+        function backcomment(msg){
+            backdb=document.getElementById('id_content');
+            backdb.value="@"+msg;
+            return true;
+        }
+        {% if user.is_authenticated %}
+            $(document).ready(function(){
+                $('#id_username').attr('readonly','readonly');
+                $('#id_username').val("{{ user.user_info.nickname }}");
+                $('#id_email').attr('readonly','readonly');
+                $('#id_email').val("{{ user.email }}");
+                {% if user.user_info.website %}
+                    $('#id_website').attr('readonly','readonly');
+                    $('#id_website').val("{{ user.user_info.website }}");
+                {% endif %}
+            });
+        {% endif %}
+    </script>
+{% endblock %}

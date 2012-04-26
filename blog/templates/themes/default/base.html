@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="description" content="{{ description }}"/>
+    <meta name="keywords" content="Pyblog,GAE,django,python,开放注册"/>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8;"/>
+    <title>{% block title_block %}{% endblock %} - {{ title }}</title>
+    <style>
+        {% include "themes/default/style.css" %}
+    </style>
+    {% block head_block %}{% endblock %}
+</head>
+<body>
+    <div id="wrapper">
+        <div id='wrapper-in'>
+            <div id="header">
+                <div id="header-top">
+                    <div id="search-top">
+                        <form method="get" id="searchform" action="http://www.google.com/search">
+                            <input type="text" value="" size="24" name="as_q" class="textfield" id="s">
+                            <input type="hidden" value="{{ siteurl }}" name="as_sitesearch">
+                            <input type="submit" id="go" value="搜索" class="button">
+                        </form>
+                    </div>
+                    <ul class="lavaLamp" id="lavaMenu">
+                        <li class="{%if ishome %}current_page_item{%else%}page_item{%endif%}"><a href="/">首页</a></li>
+                        {% if pages %}
+                            {% for page in pages %}
+                                <li class="{%if tslug == page.slug %}current_page_item{%else%}page_item{%endif%}"><a href="/{{ page.slug }}.html">{{ page.title }}</a></li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+                <div id="header-content">
+                    <div id="logo" class="post-title"><a href="/" title="{{ title }}">{{ title }}</a>
+                    </div>
+                </div>
+            </div>
+            <div id='container'>
+                <div id="content">
+                    {%block content %}{%endblock%}
+                </div>
+                <div id="sidebar">
+                    {% if recent_comments %}
+                        <div class='t_div sidebar-in'>
+                            <div class='t_div_t t_div_k'>
+                                <h4>最新评论</h4>
+                                <ul>
+                                    {% for comment in recent_comments %}
+                                        <li><a href="/{{comment.article.slug}}.html#comment-{{comment.no}}" title="On {{comment.article.title}}">{{comment.username}}:{{comment.content|slice:":20"}}...</a>
+                                        </li>
+                                    {%endfor%}
+                                </ul>
+                                <div class="clr"></div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if categories %}
+                        <div class='t_div sidebar-in'>
+                            <div class='t_div_t t_div_k'>
+                                <h4>分类</h4>
+                                <ul>
+                                    {%for cate in categories%}
+                                        <li><a href="/category/{{cate.slug}}">{{cate.name}} ({{cate.article_categories.count}})</a></li>
+                                    {%endfor%}
+                                </ul>
+                                <div class="clr"></div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if tags %}
+                    <div class='t_div sidebar-in'>
+                        <div class='t_div_t t_div_k'>
+                            <h4>标签</h4>
+                            <ul>
+                                {% for tag in tags %}
+                                    <a href="/tag/{{tag.name}}">{{tag.name}}</a>
+                                {% endfor %}
+                            </ul>
+                            <div class="clr"></div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class='t_div sidebar-in'>
+                        <div class='t_div_t t_div_k'>
+                            <h4>功能</h4>
+                            <ul>
+                                {%if user.is_authenticated %}
+                                    <li><a href="{% url admin %}">管理</a></li>
+                                    <li><a href="{% url logout %}">退出</a></li>
+                                {%else%}
+                                    <li><a href="{% url registeruser %}">注册</a></li>
+                                    <li><a href="{% url login %}">登录</a></li>
+                                {%endif%}
+                            </ul>
+                            <div class="clr"></div>
+                        </div>
+                    </div>
+                    {% if archives %}
+                        <div class='t_div sidebar-in'>
+                            <div class='t_div_t t_div_k'>
+                                <h4>归档</h4>
+                                <ul>
+                                    {%for archive in archives%}
+                                        <li><a href="/{{archive.year}}/{{archive.month}}">{{archive.year}}年{{archive.month}}月</a></li>
+                                    {%endfor%}
+                                </ul>
+                                <div class="clr"></div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if links %}
+                        <div class='t_div sidebar-in'>
+                            <div class='t_div_t t_div_k'>
+                                <h4>友情链接</h4>
+                                <ul>
+                                    {%for link in links%}
+                                        <li><a target="_blank" href="{{link.url}}">{{link.name}}</a></li>
+                                    {%endfor%}
+                                </ul>
+                                <div class="clr"></div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <div id="footer-in" class="footer-color">
+            Powered by <a target="_blank" href="https://www.djangoproject.com/">Django</a>. Theme by <a target="_blank" href="http://www.pyblog.com">pyblog</a>
+        </div>
+    </div>
+    <script>
+        {% include "themes/default/jquery-1.7.2.min.js" %}
+        {% include "themes/default/jquery.lavalamp.min.js" %}
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.t_div_k').live('mouseout',function(){
+                $(this).addClass('t_div_t');
+                $(this).css({
+                    'border': '1px solid #E5E5E5'
+                });
+                $(this).parent().css({
+                    'borderWidth': '1px 2px 2px 1px'
+                });
+            });
+            $('.t_div_k').live('mouseover',function(){
+                $(this).removeClass('t_div_t');
+                $(this).css({
+                    'border': '2px solid #CACACA'
+                });
+                $(this).parent().css({
+                    'borderWidth': '0px 1px 1px 0px'
+                });
+            });
+            $("#lavaMenu").lavaLamp({
+                fx: "backout",
+                speed: 700
+            });
+        });
+    </script>
+    {% block blog_extra_js %}
+    {% endblock %}
+    {% if statisticsCode %}
+        <script type="text/javascript">
+            {{ statisticsCode|safe }}
+        </script>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,108 @@
+{% load i18n %}
+<ul class="nav nav-pills">
+    <li><a href="/">{% trans "Home" %}</a></li>
+    <li><a href="{% url admin %}">{% trans "Admin Home" %}</a></li>
+    {% if user.get_user_role == 'admin' %}
+    <li><a href="{% url setting %}">{% trans "Blog Setting" %}</a></li>
+    {% endif %}
+    {% if user.get_user_role in 'admin writer' %}
+        <li class="dropdown" id="article_menu">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#article_menu">
+                {% trans "Articles" %}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url getarticlelist %}">{% trans "Article List" %}</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url addarticle %}">{% trans "Add Article" %}</a></li>
+            </ul>
+        </li>
+    {% endif %}
+    {% if user.get_user_role == 'admin' %}
+        <li class="dropdown" id="page_menu">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#page_menu">
+                {% trans "Pages" %}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url getpagelist %}">{% trans "Page List" %}</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url addpage %}">{% trans "Add Page" %}</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" id="comment_menu">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#comment_menu">
+                {% trans "Comments" %}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url getcommentlist %}">{% trans "Comment List" %}</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" id="category_menu">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#category_menu">
+                {% trans "Categories" %}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url getcategorylist %}">{% trans "Category List" %}</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url addcategory %}">{% trans "Add Category" %}</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" id="tag_menu">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#tag_menu">
+                {% trans "Tags" %}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url gettaglist %}">{% trans "Tag List" %}</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url addtag %}">{% trans "Add Tag" %}</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" id="link_menu">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#link_menu">
+                {% trans "Links" %}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url getlinklist %}">{% trans "Link List" %}</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url addlink %}">{% trans "Add Link" %}</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" id="file_menu">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#file_menu">
+                {% trans "Files" %}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url getfilelist %}">{% trans "File List" %}</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" id="user_menu">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#user_menu">
+                {% trans "User" %}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url getuserlist %}">{% trans "User List" %}</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url adduser %}">{% trans "Add User" %}</a></li>
+            </ul>
+        </li>
+    {% endif %}
+</ul>
+<ul class="nav pull-right">
+    <li class="dropdown" id="fat-menu">
+        <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ user.get_user_nickname }} <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url edituser user.id %}">{% trans "Edit Infomation" %}</a></li>
+            <li class="divider"></li>
+            <li><a href="{% url editpassword %}">{% trans "Edit Password" %}</a></li>
+            <li class="divider"></li>
+            <li><a href="{% url logout %}">{% trans "Login Out" %}</a></li>
+        </ul>
+    </li>
+</ul>

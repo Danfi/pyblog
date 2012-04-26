@@ -1,0 +1,171 @@
+{% extends "sysBase/base.html" %}
+{% load i18n %}
+{% block excra_css %}
+    <link rel="stylesheet" type="text/css" href="/static/ueditor/themes/default/ueditor.css"/>
+    <style type="text/css">
+        .sys_form_div{
+            margin: 5em auto;
+            /*box-shadow: 0 4px 18px #C8C8C8;*/
+        }
+        .sys_form_div legend{
+            text-align: center;
+        }
+        .right_form .form-actions{
+            margin-bottom: 0;
+        }
+        .left_form{
+            box-shadow: 0 4px 18px #C8C8C8;
+            padding-top:10px;
+            border-radius: 6px;
+        }
+        .left_form .control-label{
+            width: 90px;
+        }
+        .left_form .controls{
+            margin-left: 100px;
+        }
+        .left_form .control-group{
+            margin-bottom: 10px;
+        }
+        .atricle_right{
+            padding-top:10px;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px #C8C8C8;
+            margin-bottom: 10px;
+        }
+        .right_form .control-label{
+            width: 43px;
+        }
+        .right_form .controls{
+            margin-left: 50px;
+        }
+        .right_form .checkbox_controls{
+            margin-left: 15px;
+        }
+        .right_form .checkbox{
+            cursor: pointer;
+        }
+        .right_form .control-group{
+            margin-bottom: 5px;
+        }
+        .article_form_btn{
+            padding-left: 70px !important;
+            margin-top: 5px !important;
+        }
+        .checkbox_list{
+            height: 150px;
+            overflow:auto;
+        }
+        .checkbox_list ul{
+            list-style: none;
+            margin: 3px 10px 0 0;
+        }
+        .checkbox_list ul li label{
+            cursor: pointer;
+        }
+        .category_cbx{
+            margin-top: 0 !important;
+        }
+        .populate_tags{
+            border: 1px solid #CCCCCC;
+            border-radius: 6px 6px 6px 6px;
+            height: 190px;
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 207px;
+        }
+        .populate_tags a{
+            color: #333333;
+        }
+    </style>
+{% endblock %}
+{% block page_body_content %}
+    <form action="{{ form_url }}" method="post" class="form-horizontal">
+        {% csrf_token %}
+        <div class="container-fluid sys_form_div">
+            <div class="row-fluid">
+                <div class="span9 left_form">
+                    <div class="control-group">
+                        <label class="control-label">{{ form.title.label }}: </label>
+                        <div class="controls">
+                            {{ form.title }}{{ form.title.errors }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">{{ form.slug.label }}: </label>
+                        <div class="controls">
+                            {{ form.slug }}{{ form.slug.errors }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">{{ form.content.label }}: </label>
+                        <div class="controls">
+                            {{ form.content }}{{ form.content.errors }}
+                        </div>
+                    </div>
+                </div>
+                <div class="span3 right_form">
+                    <div class="atricle_right">
+                        <div class="control-group">
+                            <div class="checkbox_controls">
+                                <label class="checkbox">
+                                    {{ form.allowComment }}{{ form.allowComment.label }}
+                                </label>{{ form.allowComment.errors }}
+                            </div>
+                        </div>
+                        <div class="form-actions article_form_btn">
+                            <button class="btn" type="submit" id="article_publish">{% trans 'Publish' %}</button>
+                            <button class="btn" type="submit" id="article_save">{% trans 'Save' %}</button>
+                            <button class="btn" type="reset">{% trans 'Reset' %}</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block excra_js %}
+    <script type="text/javascript" charset="utf-8" src="/static/ueditor/editor_all.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/ueditor/editor_config.js"></script>
+    <script type="text/javascript">
+        var editorOption = {
+            autoHeightEnabled:false,
+            toolbars:[
+                ['FullScreen', 'Source', '|', 'Undo', 'Redo', '|',
+                    'Bold', 'Italic', 'Underline', 'StrikeThrough', 'Superscript', 'Subscript', 'RemoveFormat', 'FormatMatch','AutoTypeSet', '|',
+                    'BlockQuote', '|', 'PastePlain', '|', 'ForeColor', 'BackColor', 'InsertOrderedList', 'InsertUnorderedList','SelectAll', 'ClearDoc', '|', 'CustomStyle',
+                    'Paragraph', '|','RowSpacingTop', 'RowSpacingBottom','LineHeight', '|','FontFamily', 'FontSize', '|',
+                    'DirectionalityLtr', 'DirectionalityRtl', '|', '', 'Indent', '|',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyJustify', '|',
+                    'Link', 'Unlink', 'Anchor', '|', 'ImageNone', 'ImageLeft', 'ImageRight', 'ImageCenter', '|', 'InsertImage', 'Emotion', 'InsertVideo', 'Attachment', 'HighlightCode', '|',
+                    'Horizontal', 'Date', 'Time', 'Spechars', '|',
+                    'InsertTable', 'DeleteTable', 'InsertParagraphBeforeTable', 'InsertRow', 'DeleteRow', 'InsertCol', 'DeleteCol', 'MergeCells', 'MergeRight', 'MergeDown', 'SplittoCells', 'SplittoRows', 'SplittoCols', '|',
+                    'Preview', 'SearchReplace']
+            ]
+        };
+        var editor_a = new baidu.editor.ui.Editor(editorOption);
+        editor_a.render( 'id_content' );
+        $(document).ready(function(){
+            $('a',$('.populate_tags')).click(function(){
+                var tags = $('#id_tags').val();
+                if(tags){
+                    var tag_list = tags.split(',');
+                    if($.inArray($(this).text(),tag_list) == -1){
+                        tags += $(this).text() + ',';
+                    }
+                }else{
+                    tags += $(this).text() + ',';
+                }
+                $('#id_tags').val(tags);
+            });
+            var form_action = $('form').attr('action');
+            $("#article_save").click(function(){
+                $('form').attr('action',form_action+'?act_type=save');
+            });
+            $("#article_publish").click(function(){
+                $('form').attr('action',form_action+'?act_type=publish');
+            });
+        });
+    </script>
+{% endblock %}

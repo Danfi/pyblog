@@ -1,0 +1,15 @@
+{% load i18n %}
+<ul class="table_head_ul">
+    <li class="dropdown">
+        <a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ title }}<b class="caret"></b></a>
+        <ul class="dropdown-menu list_filter" ajax_url="{{ turl }}" t_filter_name="{{ tfilter_name }}">
+            {% for key, value in tchoice %}
+                <li><a href="" t_filter_value="{{ key }}">{{ value }}</a></li>
+                <li class="divider"></li>
+            {% endfor %}
+            <li><a href="{{ turl }}">{% trans "All" %}</a></li>
+        </ul>
+    </li>
+</ul>
+
+
