@@ -40,7 +40,7 @@
 {% block list_body %}
     <td width="32px"><input type="checkbox" class='cbox' tid={{ t.id }}></td>
     <td>{{ t.username }}</td>
-    <td><a href="{% url editcomment t.id %}">{{ t.content|slice:":20" }}</a></td>
+    <td><a href="{% url editcomment t.id %}">{{ t.content|truncatechars:20 }}</a></td>
     <td>{{ t.submitTime|date:"Y-m-d H:i" }}</td>
     <td>{{ t.article }}</td>
     <td>{{ t.get_status_display }}</td>

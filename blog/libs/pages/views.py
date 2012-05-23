@@ -10,8 +10,8 @@ from django.core.urlresolvers import reverse
 from django.utils.datastructures import MultiValueDictKeyError
 from blog.libs.pages.forms import pageForm
 from blog.libs.articles.models import articles
-from sysadmin.decorator import admin_required
-from sysadmin.utils import get_datatables_records
+from admin.decorator import admin_required
+from admin.utils import get_datatables_records
 from django.utils.translation import ugettext_lazy as _
 
 @login_required

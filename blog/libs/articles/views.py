@@ -16,15 +16,15 @@ from blog.libs.tags.models import tags
 from django.utils import simplejson
 from forms import articlesForm
 from blog.libs.articles.models import articles
-from sysadmin.decorator import admin_required, writer_required
-from sysadmin.libs.files.models import blogFiles
-from sysadmin.utils import get_datatables_records, write_file, check_file_path
+from admin.decorator import admin_required, writer_required
+from admin.libs.files.models import blogFiles
+from admin.utils import get_datatables_records, write_file, check_file_path, getBlogTheme
 from django.utils.translation import ugettext_lazy as _
 from datetime import datetime
 from django.conf import settings
 import os, random
 from PIL import Image
-from sysadmin.libs.settings.models import blogSettings
+from admin.libs.settings.models import blogSettings
 
 @login_required
 @writer_required
@@ -86,7 +86,6 @@ def editArticle(request,tid,template_name):
                     tag_init += ','
                 form = articlesForm(instance=tarticles,initial={'tags':tag_init})
             vt = loader.get_template(template_name)
-            print tarticles.slug
             c = RequestContext(
                 request,
                     {
@@ -139,7 +138,7 @@ def delArticle(request):
             articles.objects.filter(id__in=tids).delete()
     return HttpResponseRedirect(reverse('getarticlelist'))
 
-def articleView(request,tslug,template_name):
+def articleView(request,tslug):
     try:
         tarticle = articles.objects.get(slug=tslug)
         tblogSettings = blogSettings.objects.get(id=1)
@@ -177,7 +176,7 @@ def articleView(request,tslug,template_name):
             number2 = random.randint(1, 10)
             arithmeticResult = number1 + number2
             form = commentsForm(arithmeticResult)
-        vt = loader.get_template(template_name)
+        vt = loader.get_template('themes/'+getBlogTheme()+'/article.html')
         c = RequestContext(
             request,
             {
@@ -185,9 +184,9 @@ def articleView(request,tslug,template_name):
                 'tslug':tslug,
                 'tcomments':object_result,
                 'prev_page': prev_page,
+                'page':page,
                 'next_page': next_page,
                 'form':form,
-                'form_url':'/%s.html' %tslug,
                 'number1':number1,
                 'number2':number2
             }
@@ -200,7 +199,7 @@ def articleView(request,tslug,template_name):
             context_instance=RequestContext(request)
         )
 
-def articleUnderCategory(request,tslug,template_name):
+def articleUnderCategory(request,tslug):
         try:
             tcategory = categories.objects.get(slug=tslug)
             queryset=articles.objects.filter(categories=tcategory,type='article').order_by('-publishTime')
@@ -209,19 +208,19 @@ def articleUnderCategory(request,tslug,template_name):
                 request,
                 queryset,
                 search_fields,
-                template_name,
+                'themes/'+getBlogTheme()+'/category.html',
                 extra_context={
                     'category':tcategory
                 }
             )
         except categories.DoesNotExist:
             return render_to_response(
-                'themes/default/error.html',
+                'themes/'+getBlogTheme()+'/category.html',
                     {'message':_('Category does not exist.')},
                 context_instance=RequestContext(request)
             )
 
-def articleUnderTag(request,tslug,template_name):
+def articleUnderTag(request,tslug):
     try:
         ttag = tags.objects.get(name=tslug)
         queryset=articles.objects.filter(tags=ttag,type='article').order_by('-publishTime')
@@ -230,26 +229,26 @@ def articleUnderTag(request,tslug,template_name):
             request,
             queryset,
             search_fields,
-            template_name,
+            'themes/'+getBlogTheme()+'/tag.html',
             extra_context={
                 'tag':ttag
             }
         )
     except tags.DoesNotExist:
         return render_to_response(
-            'themes/default/error.html',
+            'themes/'+getBlogTheme()+'/tag.html',
                 {'message':_('Tag does not exist.')},
             context_instance=RequestContext(request)
         )
 
-def articleUnderArchive(request,year,month,template_name):
+def articleUnderArchive(request,year,month):
     queryset=articles.objects.filter(publishTime__year=year,publishTime__month=month,type='article').order_by('-publishTime')
     search_fields = ['title']
     return get_datatables_records(
         request,
         queryset,
         search_fields,
-        template_name,
+        'themes/'+getBlogTheme()+'/archive.html',
         extra_context={
             'year':year,
             'month':month

@@ -10,9 +10,9 @@ from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from blog.libs.comments.forms import commentsForm
 from blog.libs.comments.models import comments
-from sysadmin.choices import commentsStatus
-from sysadmin.decorator import admin_required
-from sysadmin.utils import get_datatables_records
+from admin.choices import commentsStatus
+from admin.decorator import admin_required
+from admin.utils import get_datatables_records
 from django.utils.translation import ugettext_lazy as _
 
 @login_required

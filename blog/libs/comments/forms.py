@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from datetime import datetime
-
+from django.utils import timezone
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from blog.libs.comments.models import comments
@@ -56,7 +56,7 @@ class commentsForm(forms.ModelForm):
         model = comments
         exclude =('article','no','submitTime','status')
 
-    def __init__(self, arithmeticResult, *args, **kwargs):
+    def __init__(self, arithmeticResult=None, *args, **kwargs):
         self.arithmeticResult = arithmeticResult
         super(commentsForm, self).__init__(*args, **kwargs)
         if arithmeticResult:
@@ -77,7 +77,6 @@ class commentsForm(forms.ModelForm):
         return website
 
     def clean_arithmetic(self):
-        print self.arithmeticResult
         arithmetic = self.cleaned_data['arithmetic']
         if arithmetic != self.arithmeticResult:
             raise forms.ValidationError(_("The answer is wrong."))
@@ -88,6 +87,6 @@ class commentsForm(forms.ModelForm):
         if commit:
             if taction == 'add':
                 te.article = article
-                te.submitTime = datetime.now()
+                te.submitTime = datetime.now(tz=timezone.get_default_timezone())
             te.save()
         return te

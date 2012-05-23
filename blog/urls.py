@@ -7,7 +7,7 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('blog.views',
-    url(r'^$', 'homePage', {'template_name':'themes/default/home.html'}),
+    url(r'^$', 'homePage'),
 )
 
 urlpatterns += patterns('blog.libs.articles.views',
@@ -18,10 +18,10 @@ urlpatterns += patterns('blog.libs.articles.views',
     url(r'^uploadimagesfromueditor/$', 'uploadImagesFromUeditor', name='uploadimagesfromueditor'),
     url(r'^uploadfilesfromueditor/$', 'uploadFilesFromUeditor', name='uploadfilesfromueditor'),
 
-    url(r'^(?P<tslug>\w+).html$', 'articleView', {'template_name': 'themes/default/article.html'}),
-    url(r'^category/(?P<tslug>\w+)/$', 'articleUnderCategory', {'template_name': 'themes/default/category.html'}, name='category'),
-    url(r'^tag/(?P<tslug>\w+)/$', 'articleUnderTag', {'template_name': 'themes/default/tag.html'}, name='tag'),
-    url(r'^(?P<year>\d{4})/(?P<month>(\d{1,2})?)/$', 'articleUnderArchive', {'template_name': 'themes/default/archive.html'}),
+    url(r'^(?P<tslug>\w+).html$', 'articleView'),
+    url(r'^category/(?P<tslug>\w+)/$', 'articleUnderCategory', name='category'),
+    url(r'^tag/(?P<tslug>\w+)/$', 'articleUnderTag', name='tag'),
+    url(r'^(?P<year>\d{4})/(?P<month>(\d{1,2})?)/$', 'articleUnderArchive'),
 )
 
 urlpatterns += patterns('blog.libs.categories.views',

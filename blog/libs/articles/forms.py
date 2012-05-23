@@ -7,6 +7,7 @@ from blog.libs.categories.models import categories
 from blog.libs.tags.models import tags
 from blog.libs.articles.models import articles
 from datetime import datetime
+from django.utils import timezone
 
 class articlesForm(forms.ModelForm):
     title = forms.CharField(
@@ -91,7 +92,7 @@ class articlesForm(forms.ModelForm):
             te.author = request.user
             if act_type == 'publish':
                 if not te.publishTime:
-                    te.publishTime = datetime.now()
+                    te.publishTime = datetime.now(tz=timezone.get_default_timezone())
                 te.status = 'Published'
             elif act_type == 'save':
                 if not te.publishTime:

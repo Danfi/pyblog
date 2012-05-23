@@ -1,14 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, include, url, handler404, handler500
 from django.conf import settings
-# Uncomment the next two lines to enable the admin:
-#from django.contrib import admin
-#admin.autodiscover()
-from django.conf.urls import patterns, url, include
-from sysadmin.feeds import LatestEntriesFeed
-from sysadmin.sitemap import articleSitemap, homeSitemap
+from admin.feeds import LatestEntriesFeed
+from admin.sitemap import articleSitemap, homeSitemap
 
 
 sitemaps = {
@@ -17,7 +13,7 @@ sitemaps = {
 }
 
 urlpatterns = patterns('',
-    url(r'^', include('sysadmin.urls')),
+    url(r'^', include('admin.urls')),
     url(r'^', include('blog.urls')),
     # Examples:
     # url(r'^$', 'pyblog.views.home', name='home'),
@@ -37,3 +33,6 @@ if settings.DEBUG:
     urlpatterns += patterns('django.contrib.staticfiles.views',
         url(r'^static/(?P<path>.*)$', 'serve'),
     )
+
+handler404 = 'admin.libs.error.views.error404'
+handler500 = 'admin.libs.error.views.error500'

@@ -5,6 +5,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from blog.libs.articles.models import articles
 from datetime import datetime
+from django.utils import timezone
 
 class pageForm(forms.ModelForm):
     title = forms.CharField(
@@ -44,7 +45,7 @@ class pageForm(forms.ModelForm):
             te.author = request.user
             if act_type == 'publish':
                 if not te.publishTime:
-                    te.publishTime = datetime.now()
+                    te.publishTime = datetime.now(tz=timezone.get_default_timezone())
                 te.status = 'Published'
             elif act_type == 'save':
                 if not te.publishTime:

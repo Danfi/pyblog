@@ -10,8 +10,8 @@ from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 from blog.libs.categories.forms import categoriesForm
 from blog.libs.categories.models import categories
-from sysadmin.decorator import admin_required
-from sysadmin.utils import get_datatables_records
+from admin.decorator import admin_required
+from admin.utils import get_datatables_records
 from django.utils.translation import ugettext_lazy as _
 
 @login_required

@@ -1,0 +1,26 @@
+[
+    {
+        "model": "admin.userInfo",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "userRole": "admin",
+            "website":"",
+            "nickname":"admin"
+        }
+    },
+    {
+        "model": "admin.blogSettings",
+        "pk": 1,
+        "fields": {
+            "title": "pyblog",
+            "subtitle": "hello world!",
+            "articlesPerPage":8,
+            "commentsPerPage":20,
+            "commentsOrder":"descending",
+            "statisticsCode":null,
+            "siteurl":"www.pyblog.com",
+            "theme":"default"
+        }
+    }
+]

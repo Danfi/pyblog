@@ -4,7 +4,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from blog.libs.categories.models import categories
-from sysadmin.utils import sortCategory
+from admin.utils import sortCategory
 
 class categoriesForm(forms.ModelForm):
     name = forms.CharField(label=_("Category Name"), max_length=50,widget=forms.TextInput())

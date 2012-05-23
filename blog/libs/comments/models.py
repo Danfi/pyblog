@@ -5,7 +5,7 @@ import urllib
 
 from django.db import models
 from blog.libs.articles.models import articles
-from sysadmin.choices import commentsStatus
+from admin.choices import commentsStatus
 
 class comments(models.Model):
     no = models.IntegerField()

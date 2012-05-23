@@ -1,6 +1,43 @@
 {% extends "themes/default/base.html" %}
 {% block title_block %}首页{% endblock %}
 {% block content%}
+    {% if tstickys and page == 1 %}
+        {% for article in tstickys %}
+            <div class='t_div' id="post-{{ article.id }}">
+                <div class='t_div_t t_div_k'>
+                    <div class='post-title'>
+                        <a href="/{{ article.slug }}.html" title="{{article.title}}">[置顶]{{article.title}}</a>
+                        <div class="post-edit">
+                            {%if article.author == user or user.get_user_role == 'admin'%}
+                            <a href="{% url editarticle article.id %}">编辑</a>
+                            {%endif%}
+                        </div>
+                    </div>
+                    <div class='post-time'>
+                        Posted by {{ article.author.get_user_nickname }} on {{ article.publishTime|date:"Y-m-d H:i" }}
+                        {% if article.allowComment %}
+                        <div class="post-comment">
+                            <a href="/{{ article.slug }}.html#comments">评论({{ article.article_comments.count }})</a>
+                        </div>
+                        {%endif%}
+                    </div>
+                    <div class='post-content'>
+                        {% if article.abstract  %}
+                        {{ article.abstract|safe }}
+                        {% else %}
+                        {{ article.content|safe }}
+                        {% endif %}
+                    </div>
+                    {% if article.abstract  %}
+                    <div class='post-bottom'>
+                        <a href="/{{ article.slug }}.html">阅读全文</a>
+                    </div>
+                    {% endif %}
+                    <div class="clr"></div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
     {% if object_result %}
         {% for article in object_result %}
             <div class='t_div' id="post-{{ article.id }}">

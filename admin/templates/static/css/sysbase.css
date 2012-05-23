@@ -1,0 +1,105 @@
+html, body {
+    margin:0;
+    height:100%;
+}
+#container {
+    min-height:100%; /* 此属性需要doctype的支持，见第一行。 否则不会生效。在IE中，写height：100%就可以工作，但其他浏览器需要设置min-height。*/
+    position:relative; /* 必要 */
+}
+/*表单验证错误提示*/
+.errorlist{
+    list-style: none;
+    color: #B94A48;
+    margin: 5px 0 0;
+}
+/*下拉菜单分割线*/
+.divider{
+    margin: 3px 1px !important;
+}
+.blog_body{
+    width:100%;
+    height:100%;
+    overflow:auto
+}
+.body_content{
+    margin-top: 45px;
+    min-height:595px;
+}
+.footer{
+    width:100%;
+    height:43px;
+    bottom:0px;
+    box-shadow: 1px 1px 3px #292929;
+    font-size: 14px;
+    text-align: center;
+    position: absolute;
+}
+/*后台列表*/
+.list_content .syslist_btn{
+    padding: 0;
+    margin-bottom: 0;
+    height: 60px;
+}
+.table_head_ul{
+    margin: 0 auto;
+    list-style: none;
+}
+.table_head_ul a{
+    color: #333333;
+}
+.table_head_ul a:hover{
+    color: #333333;
+    text-decoration: none;
+}
+.syslist table{
+    table-layout:fixed;
+}
+.syslist table th,
+.syslist table td{
+    text-align:center;
+    table-layout:fixed;
+    word-wrap:break-word;
+}
+.syslist_btn ul{
+    display: inline;
+}
+.syslist_btn ul li{
+    display: inline-block;
+}
+.syslist_btn li a {
+    background: white;
+    border: 1px solid #E0DEDE;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 1px 1px 3px #DDDDDD;
+    color: #7D7D7D;
+    display: block;
+    font: bold 14px/27px "微软雅黑","宋体";
+    margin: 10px 5px;
+    opacity: 0.9;
+    overflow: hidden;
+    padding: 5px;
+    text-decoration: none;
+    width: 60px;
+    text-align: center;
+}
+.syslist_btn li a:hover {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #AAAAAA;
+    box-shadow: 1px 1px 6px #BBBBBB;
+    color: #666666;
+    opacity: 1;
+    text-decoration: none;
+}
+/*后台表单*/
+.form_legend_text{
+    margin-left: 60px;
+}
+form legend{
+    margin-bottom: 0;
+
+}
+/*搜索表单*/
+.search_form{
+    float: right;
+    margin: 15px;
+}

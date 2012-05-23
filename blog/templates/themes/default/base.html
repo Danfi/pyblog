@@ -6,7 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8;"/>
     <title>{% block title_block %}{% endblock %} - {{ title }}</title>
     <style>
-        {% include "themes/default/style.css" %}
+        {% include "themes/default/css/style.css" %}
+        {% include "themes/default/css/shCoreDefault.css" %}
     </style>
     {% block head_block %}{% endblock %}
 </head>
@@ -47,7 +48,7 @@
                                 <h4>最新评论</h4>
                                 <ul>
                                     {% for comment in recent_comments %}
-                                        <li><a href="/{{comment.article.slug}}.html#comment-{{comment.no}}" title="On {{comment.article.title}}">{{comment.username}}:{{comment.content|slice:":20"}}...</a>
+                                        <li><a href="/{{comment.article.slug}}.html#comment-{{comment.id}}" title="On {{comment.article.title}}">{{comment.username}}:{{comment.content|truncatechars:18}}</a>
                                         </li>
                                     {%endfor%}
                                 </ul>
@@ -61,7 +62,7 @@
                                 <h4>分类</h4>
                                 <ul>
                                     {%for cate in categories%}
-                                        <li><a href="/category/{{cate.slug}}">{{cate.name}} ({{cate.article_categories.count}})</a></li>
+                                        <li><a href="/category/{{cate.slug}}/">{{cate.name}} ({{cate.article_categories.count}})</a></li>
                                     {%endfor%}
                                 </ul>
                                 <div class="clr"></div>
@@ -74,7 +75,7 @@
                             <h4>标签</h4>
                             <ul>
                                 {% for tag in tags %}
-                                    <a href="/tag/{{tag.name}}">{{tag.name}}</a>
+                                    <a href="/tag/{{tag.name}}/">{{tag.name}}</a>
                                 {% endfor %}
                             </ul>
                             <div class="clr"></div>
@@ -102,7 +103,7 @@
                                 <h4>归档</h4>
                                 <ul>
                                     {%for archive in archives%}
-                                        <li><a href="/{{archive.year}}/{{archive.month}}">{{archive.year}}年{{archive.month}}月</a></li>
+                                        <li><a href="/{{archive.year}}/{{archive.month}}/">{{archive.year}}年{{archive.month}}月</a></li>
                                     {%endfor%}
                                 </ul>
                                 <div class="clr"></div>
@@ -133,9 +134,10 @@
         </div>
     </div>
     <script>
-        {% include "themes/default/jquery-1.7.2.min.js" %}
-        {% include "themes/default/jquery.lavalamp.min.js" %}
+        {% include "themes/default/js/jquery-1.7.2.min.js" %}
+        {% include "themes/default/js/jquery.lavalamp.min.js" %}
     </script>
+    <script type="text/javascript" charset="UTF-8" src="/static/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('.t_div_k').live('mouseout',function(){
@@ -161,6 +163,7 @@
                 speed: 700
             });
         });
+        SyntaxHighlighter.all();
     </script>
     {% block blog_extra_js %}
     {% endblock %}
