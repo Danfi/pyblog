@@ -1,9 +1,0 @@
-{% load i18n %}
-<ul class="pager">
-    {% if prev_page %}
-        <li><a href="?page={{ prev_page }}">{% trans "Previous"  %}</a></li>
-    {% endif %}
-    {% if next_page %}
-        <li><a href="?page={{ next_page }}">{% trans "Next"  %}</a></li>
-    {% endif %}
-</ul>
