@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyblog\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-22 00:46+0800\n"
-"PO-Revision-Date: 2012-04-22 00:47+0800\n"
-"Last-Translator: Danfi <t@danfi.cn>\n"
+"POT-Creation-Date: 2012-11-09 11:13+0800\n"
+"PO-Revision-Date: 2012-11-09 11:15+0800\n"
+"Last-Translator: danfi <t@danfi.cn>\n"
 "Language-Team: danfi <t@danfi.cn>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -17,48 +17,48 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
-#: libs/articles/forms.py:13
-#: libs/articles/views.py:125
-#: libs/pages/forms.py:11
+#: libs/articles/forms.py:14
+#: libs/articles/views.py:127
+#: libs/pages/forms.py:12
 #: libs/pages/views.py:98
 #: templates/articles/articleList.html:18
 #: templates/pages/pageList.html:18
 msgid "Title"
 msgstr "标题"
 
-#: libs/articles/forms.py:22
-#: libs/pages/forms.py:20
+#: libs/articles/forms.py:23
+#: libs/pages/forms.py:21
 msgid "Articles Slug"
 msgstr "别名"
 
-#: libs/articles/forms.py:24
+#: libs/articles/forms.py:25
 #: libs/comments/forms.py:46
 #: libs/comments/views.py:33
-#: libs/pages/forms.py:22
+#: libs/pages/forms.py:23
 #: templates/comments/commentList.html:33
 msgid "Content"
 msgstr "内容"
 
-#: libs/articles/forms.py:32
+#: libs/articles/forms.py:33
 msgid "Abstract"
 msgstr "摘要"
 
-#: libs/articles/forms.py:41
+#: libs/articles/forms.py:42
 #: templates/articles/articleList.html:21
 msgid "Tags"
 msgstr "标签"
 
-#: libs/articles/forms.py:46
+#: libs/articles/forms.py:47
 #: templates/articles/articleList.html:20
 msgid "Categories"
 msgstr "分类"
 
-#: libs/articles/forms.py:56
+#: libs/articles/forms.py:57
 msgid "Sticky"
 msgstr "置顶"
 
-#: libs/articles/forms.py:62
-#: libs/pages/forms.py:30
+#: libs/articles/forms.py:63
+#: libs/pages/forms.py:31
 msgid "Allow Comment"
 msgstr "允许评论"
 
@@ -66,29 +66,29 @@ msgstr "允许评论"
 msgid "Add Article"
 msgstr "添加文章"
 
-#: libs/articles/views.py:93
+#: libs/articles/views.py:94
 msgid "Edit Article"
 msgstr "编辑文章"
 
-#: libs/articles/views.py:100
+#: libs/articles/views.py:102
 msgid "You have no perm to edit this article."
 msgstr "权限不够哦！"
 
-#: libs/articles/views.py:106
-#: libs/articles/views.py:196
+#: libs/articles/views.py:108
+#: libs/articles/views.py:198
 msgid "Article does not exist."
 msgstr "文章不存在。"
 
-#: libs/articles/views.py:123
+#: libs/articles/views.py:125
 msgid "Article List"
 msgstr "文章列表"
 
-#: libs/articles/views.py:217
+#: libs/articles/views.py:219
 #: libs/categories/views.py:63
 msgid "Category does not exist."
 msgstr "分类不存在。"
 
-#: libs/articles/views.py:238
+#: libs/articles/views.py:240
 #: libs/tags/views.py:63
 msgid "Tag does not exist."
 msgstr "标签不存在。"
@@ -146,7 +146,7 @@ msgstr "算术题"
 msgid "Website"
 msgstr "网站"
 
-#: libs/comments/forms.py:83
+#: libs/comments/forms.py:82
 msgid "The answer is wrong."
 msgstr "答案错误。"
 
@@ -230,22 +230,26 @@ msgstr "编辑标签"
 msgid "Tag List"
 msgstr "标签列表"
 
-#: templates/articles/articleForm.html:130
+#: templates/articles/articleForm.html:131
+msgid "View"
+msgstr "查看"
+
+#: templates/articles/articleForm.html:133
 #: templates/pages/pageForm.html:117
 msgid "Publish"
 msgstr "发表"
 
-#: templates/articles/articleForm.html:131
+#: templates/articles/articleForm.html:135
 #: templates/pages/pageForm.html:118
 msgid "Save"
 msgstr "保存"
 
-#: templates/articles/articleForm.html:132
+#: templates/articles/articleForm.html:136
 #: templates/pages/pageForm.html:119
 msgid "Reset"
 msgstr "重置"
 
-#: templates/articles/articleForm.html:152
+#: templates/articles/articleForm.html:156
 msgid "Tags are seperated with ',',the following are the most commonly used."
 msgstr "标签之间用‘,’隔开，以下为最常用标签。"
 
