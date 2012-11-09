@@ -21,9 +21,3 @@ class tagsForm(forms.ModelForm):
     class Meta:
         model = tags
         exclude = ('actionLatest',)
-
-    def save(self, commit=True):
-        te = super(tagsForm, self).save(commit=False)
-        if commit:
-            te.save()
-        return te

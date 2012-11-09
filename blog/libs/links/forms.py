@@ -19,9 +19,3 @@ class linksForm(forms.ModelForm):
 
     class Meta:
         model = links
-
-    def save(self, commit=True):
-        te = super(linksForm, self).save(commit=False)
-        if commit:
-            te.save()
-        return te

@@ -37,9 +37,3 @@ class categoriesForm(forms.ModelForm):
         self.fields['parent'].widget=forms.Select(
             choices=tuple(sortCategory())
         )
-
-    def save(self, commit=True):
-        te = super(categoriesForm, self).save(commit=False)
-        if commit:
-            te.save()
-        return te
